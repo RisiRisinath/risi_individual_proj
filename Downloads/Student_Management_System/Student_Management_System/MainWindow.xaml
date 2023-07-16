@@ -1,0 +1,109 @@
+﻿<Window x:Class="Student_Management_System.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Student_Management_System"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="MainWindow" Height="450" Width="610"
+        Background="Transparent"
+        WindowStyle="None" ResizeMode="NoResize" >
+    <Window.DataContext>
+        <local:MainWindowVM/>
+    </Window.DataContext>
+
+
+    <Grid Margin="6">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+
+        <StackPanel x:Name="ControlBar" Orientation="Horizontal" VerticalAlignment="Center"
+                                    FlowDirection="RightToLeft" Background="Transparent"
+                    Margin="2,0,5,0"
+                                    
+                    Grid.ColumnSpan="2">
+
+            <Button x:Name="btnClose"  
+                    
+                                     Command="{Binding CloseMainWindowCommand}"
+                    Margin="2" Width="15" Height="15" VerticalAlignment="Center" FontSize="10">X
+
+            </Button>
+
+
+        </StackPanel>
+
+
+        <TextBlock Text="University Of Ruhuna" Foreground="black" FontSize="20" FontWeight="Bold" Background="AliceBlue"
+                   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                    Margin="0,10,0,10" Padding="3 3 3 3" 
+                   HorizontalAlignment="Center" FontFamily="Bodoni MT" Width="600" TextAlignment="Center" Height="29.9833333333333" >
+
+        </TextBlock>
+
+
+
+        <ListView x:Name="Listview"  Grid.Column="0" Grid.Row="2"  Width="400" Height="200" HorizontalAlignment="Center"   
+                  
+            ItemsSource="{Binding Students, UpdateSourceTrigger=PropertyChanged}"
+            SelectedItem="{Binding SelectedStudent, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="Listview_SelectionChanged" Grid.RowSpan="3">
+
+            <ListView.ItemTemplate  >
+                <DataTemplate >
+                    <Border Background="Transparent" 
+                            BorderBrush="Black" 
+                            BorderThickness="2"
+                                                        
+                                Padding="3" CornerRadius="10" 
+                            Width="225" Height="190" Margin="70 10">
+                        <StackPanel   Background="Transparent" Orientation="Horizontal" >
+
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="100" Height="100" Margin="10" 
+                                   Source="{Binding Image}" />
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding IndexNo, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource ListView}" />
+                                    <TextBlock Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource ListView}" />
+                                    <TextBlock Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource ListView}" />
+
+                                    <TextBlock Text="{Binding GPA, StringFormat='{}{0:F2}', UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource ListView}" />
+                                    <TextBlock Text="{Binding DateOfBirth, StringFormat={}{0:dd/MM/yyyy}, 
+                                        UpdateSourceTrigger=PropertyChanged}"  Style="{StaticResource ListView}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+
+                    </Border>
+                </DataTemplate>
+
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Grid.Row="4"  Height="NaN" Width="NaN" Content="Insert"    Command="{Binding AddStudentCommand}" 
+                Style="{StaticResource mainbutton}" Foreground="Black"  Margin="40,123,400,-138"
+                    >
+
+        </Button>
+
+        <Button Content="Edit" Grid.Row="4"  Height="NaN" Width="NaN" Style="{StaticResource mainbutton}"
+                   Command="{Binding ExecuteEditStudentCommandCommand}"
+                    Foreground="Black" Margin="226,124,226,-138" >
+
+        </Button>
+
+        <Button Content="Delete" Grid.Row="4"  Height="NaN" Width="NaN" Style="{StaticResource mainbutton}"                
+                Command="{Binding DeleteCommand}" Foreground="Black" Margin="415,123,50,-138">
+
+        </Button>
+
+    </Grid>
+</Window>
